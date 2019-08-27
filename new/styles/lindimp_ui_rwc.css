@@ -9,3 +9,32 @@
  #lcasLogoImg{
     max-width: 100%;
  }
+
+#tourPageButtonTextContainer{
+     color: #ffff00;
+ }
+
+#homeImgButtons{
+    text-align: center;
+}
+
+ #startTourText{
+     position: relative;
+     top: 5px;
+     left: -38vw;
+     font-size: 40px;
+     color: #ffff00;
+     -webkit-text-stroke-width: 1px;
+     -webkit-text-stroke-color: black;
+ }
+
+
+ #mapText{ 
+    position: absolute;
+     top: 133px;
+     left: 51vw;
+     font-size: 40px;
+     color: #ffff00;
+     -webkit-text-stroke-width: 1px;
+     -webkit-text-stroke-color: black;
+ }

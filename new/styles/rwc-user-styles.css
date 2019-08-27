@@ -23,7 +23,7 @@ div.headerButton{
 }
 
 div.headerButtonDisabled{
-    font-size: 10vw;
+    font-size: 20px;
     /* height: 100px; */
     width: 5vw;
     max-width: 100px;
@@ -68,4 +68,6 @@ div.headerButtonDisabled{
     margin-left: 1vw;
     margin-right: 1vw;
     margin-top: 10px;
+    border: 2px solid black;
+    box-shadow: 5px 5px 5px grey;
 }

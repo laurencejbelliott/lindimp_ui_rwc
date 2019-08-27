@@ -25,15 +25,52 @@
     <script src="scripts/rwc.js?v=0.18"></script>
 </head>
 <body>
-    <script src="scripts/load-header.js"></script>
+    <header class="navbar navbar-collapse navbar-dark" style="background-color:#563C55">
+        <a class="navbar-brand">
+            <img id="collectionLogoImg" src="images/logo-collection.png" draggable="false" alt="">
+        </a>
+        <rwc-button-load-page
+        data-id="homeButton"
+        data-class="headerButton"
+        data-disabled-class="headerButtonDisabled"
+        data-text="Home"
+        data-href="index.html">
+        </rwc-button-load-page>
+        <div class="btn-group" role="group">
+            <rwc-button-action-start
+            data-id="volDownButton"
+            data-class="headerButton"
+            data-disabled-class="headerButtonDisabled"
+            data-text="&#128265;"
+            data-action="volumePercentChange"
+            data-action-parameters="-20">
+            </rwc-button-action-start>
+            <rwc-button-action-start
+            data-id="volUpButton"
+            data-class="headerButton"
+            data-disabled-class="headerButtonDisabled"
+            data-text="&#128266;"
+            data-action="volumePercentChange"
+            data-action-parameters="20">
+            </rwc-button-action-start>
+        </div>
+        <div class="navbar-item">
+            <img id="lincolnLogoImg" class="mr-1 pr-0" src="images/university.jpg" draggable="false" style="height: 110px; box-shadow: 1px 1px 15px #000000" alt="" >
+            <img id="lcasLogoImg" src="images/lcas.png" draggable="false" style="height: 110px; box-shadow: 1px 1px 15px #000000" alt="" >
+        </div>
+    </header>
     <div id="content">
         <div id="homeImgButtons">
+            <div id="startTourText">Start a tour</div>
             <rwc-img-load-page
+            id="tourPageLoadContainer"
             data-id="tourPageLoadButton"
             src="images/collection-tour.jpg"
             data-href="tours-page.html">
             </rwc-img-load-page>
+            <div id="mapText">The Collection map</div>
             <rwc-img-load-page
+            id="mapPageLoadContainer"
             data-id="mapPageLoadButton"
             src="images/collection-map.jpg"
             data-href="map-page.html">
