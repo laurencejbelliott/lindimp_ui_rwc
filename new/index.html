@@ -8,6 +8,7 @@
         crossorigin="anonymous">
     <link rel="stylesheet" href="styles/rwc-styles.css">
     <link rel="stylesheet" href="styles/rwc-user-styles.css">
+    <link rel="stylesheet" href="styles/lindimp_ui_rwc.css">
     <script
             src="https://code.jquery.com/jquery-3.4.1.min.js"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -24,16 +25,19 @@
     <script src="scripts/rwc.js?v=0.18"></script>
 </head>
 <body>
+    <script src="scripts/load-header.js"></script>
     <div id="content">
-        <rwc-img-load-page
-        id="tourPageLoadButton"
-        src="images/collection-tour.jpg"
-        data-href="tours-page.html">
-        </rwc-img-load-page>
-        <rwc-img-load-page
-        id="mapPageLoadButton"
-        src="images/collection-map.jpg"
-        data-href="map-page.html">
-        </rwc-img-load-page>
+        <div id="homeImgButtons">
+            <rwc-img-load-page
+            data-id="tourPageLoadButton"
+            src="images/collection-tour.jpg"
+            data-href="tours-page.html">
+            </rwc-img-load-page>
+            <rwc-img-load-page
+            data-id="mapPageLoadButton"
+            src="images/collection-map.jpg"
+            data-href="map-page.html">
+            </rwc-img-load-page>
+        </div>
     </div>
 </body>
