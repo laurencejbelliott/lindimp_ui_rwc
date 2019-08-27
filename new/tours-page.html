@@ -26,12 +26,13 @@
 <body>
     <header class="navbar navbar-collapse navbar-dark" style="background-color:#563C55">
         <a class="navbar-brand">
-            <img id="collectionLogoImg" src="images/logo-collection.png" draggable="false" alt="">
+          <img id="collectionLogoImg" src="images/logo-collection.png" draggable="false" alt="">
         </a>
         <rwc-button-load-page
         data-id="homeButton"
         data-class="headerButton"
         data-disabled-class="headerButtonDisabled"
+        data-clicked-class="headerButtonClicked"
         data-text="Home"
         data-href="index.html">
         </rwc-button-load-page>
@@ -40,6 +41,7 @@
             data-id="volDownButton"
             data-class="headerButton"
             data-disabled-class="headerButtonDisabled"
+            data-clicked-class="headerButtonClicked"
             data-text="&#128265;"
             data-action="volumePercentChange"
             data-action-parameters="-20">
@@ -48,14 +50,15 @@
             data-id="volUpButton"
             data-class="headerButton"
             data-disabled-class="headerButtonDisabled"
+            data-clicked-class="headerButtonClicked"
             data-text="&#128266;"
             data-action="volumePercentChange"
             data-action-parameters="20">
             </rwc-button-action-start>
-        </div>
+       </div>
         <div class="navbar-item">
-            <img id="lincolnLogoImg" class="mr-1 pr-0" src="images/university.jpg" draggable="false" style="height: 110px; box-shadow: 1px 1px 15px #000000" alt="" >
-            <img id="lcasLogoImg" src="images/lcas.png" draggable="false" style="height: 110px; box-shadow: 1px 1px 15px #000000" alt="" >
+          <img id="lincolnLogoImg" class="mr-1 pr-0" src="images/university.jpg" draggable="false" style="height: 110px; box-shadow: 1px 1px 15px #000000" alt="" >
+          <img id="lcasLogoImg" src="images/lcas.png" draggable="false" style="height: 110px; box-shadow: 1px 1px 15px #000000" alt="" >
         </div>
     </header>
 </body>
