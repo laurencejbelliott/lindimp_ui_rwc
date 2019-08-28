@@ -6,4 +6,14 @@ $(document).ready(function(){
             Show_available_tours();
         }
     });
+
+    tourTitleClickedTopic.subscribe(function(msg){
+        $("#" + msg.data).trigger("click");
+    });
+
+    exhibitCellClickedTopic.subscribe(function(msg){
+        var exhibitCellID = msg.data;
+        console.log(exhibitCellID);
+        $(document.getElementById(exhibitCellID)).trigger("click");
+    });
 });

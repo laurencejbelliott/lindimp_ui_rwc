@@ -1,3 +1,7 @@
+if (typeof receiver !== "undefined"){
+  console.log("Receiver: " + receiver);
+}
+
 // ROS topics to track gribtab clicks
 var tourTitleClickedTopic = new ROSLIB.Topic({
   ros: ros,
@@ -14,6 +18,25 @@ var exhibitCellClickedTopic = new ROSLIB.Topic({
 });
 
 var exhibitCellClickedTopicString = new ROSLIB.Message({data: ""});
+
+// if (typeof receiver === "undefined"){
+// ROS topic to track tours arrays
+var toursArrayTopic = new ROSLIB.Topic({
+  ros: ros,
+  name: "/lindimp_ui_rwc/toursArray",
+  messageType: "std_msgs/String",
+  latch: true
+});
+// } else {
+//   // ROS topic to track tours arrays
+//   toursArrayTopic = new ROSLIB.Topic({
+//     ros: ros,
+//     name: "/lindimp_ui_rwc/toursArray",
+//     messageType: "std_msgs/String"
+//   });
+// }
+
+var toursArrayTopicString = new ROSLIB.Message({data: ""});
 
 // Shuffle function to randomise tour order
 function shuffle(array) {
@@ -37,11 +60,20 @@ function Show_available_tours() {
       $.getJSON(json_filepath, function(data) {
         $("[role=content]").load("display-tours.html", function() {
           $("[role=container-title]").text("Please, select one of the available tours.")
-          var tours = data["tours"];
-  
-          //shuffle the tours array so that appears in randomized order in the page
-          shuffle(tours);
-  
+
+          var tours;
+          if (typeof receiver === "undefined"){
+            tours = data["tours"];
+            //shuffle the tours array so that appears in randomized order in the page
+            shuffle(tours);
+            toursArrayTopicString.data = JSON.stringify(tours);
+            toursArrayTopic.publish(toursArrayTopicString);
+          } else {
+            toursArrayTopic.subscribe(function(msg){
+              tours = JSON.parse(msg.data);
+            });
+          }
+
           // let's get the elements we need
           $.get("display-tours-tab.html", '', function(response, status, xhr) {
             var t_title = new DOMParser().parseFromString(response, "text/html").querySelector("[role=tour-title]");
@@ -55,11 +87,13 @@ function Show_available_tours() {
                 var t_title_c = t_title.cloneNode(true);
                 var tourKey = tours[i]["key"];
                 t_title_c.setAttribute("id", "tour-" + tourKey);
-                $(t_title_c).on("click", function(){
-                  tourKey = this.id;
-                  tourTitleClickedTopicString.data = tourKey;
-                  tourTitleClickedTopic.publish(tourTitleClickedTopicString);
-                });
+                if (typeof receiver === "undefined"){
+                  $(t_title_c).on("click", function(){
+                    tourKey = this.id;
+                    tourTitleClickedTopicString.data = tourKey;
+                    tourTitleClickedTopic.publish(tourTitleClickedTopicString);
+                  });
+                }
                 t_title_c.innerHTML = tours[i]["name"];
                 $("[role=tours-container]").append(t_title_c);
   
@@ -72,11 +106,13 @@ function Show_available_tours() {
                     if (exhibitors[e]["key"] == tour_stop_keys[k]) {
                       s_img_c = s_img.cloneNode(true);
                       s_img_c.setAttribute("id", "exhibit-" + exhibitors[e]["key"]);
-                      $(s_img_c).on("click", function(){
-                        var exhibitKey = this.id;
-                        exhibitCellClickedTopicString.data = exhibitKey;
-                        exhibitCellClickedTopic.publish(exhibitCellClickedTopicString);
-                      });
+                      if (typeof receiver === "undefined"){
+                        $(s_img_c).on("click", function(){
+                          var exhibitKey = this.id;
+                          exhibitCellClickedTopicString.data = exhibitKey;
+                          exhibitCellClickedTopic.publish(exhibitCellClickedTopicString);
+                        });
+                      }
                       s_img_c.getElementsByTagName("img")[0].setAttribute("src", exhibitors[e]["tile_image"]);
                       s_desc_c = s_desc.cloneNode(true);
                       s_desc_c.innerHTML = exhibitors[e]["title"]
@@ -90,7 +126,15 @@ function Show_available_tours() {
                 var tour_id = tours[i]["key"]; //copy the value in a new var
                 startTourButton.setAttribute("data-action-parameters", tour_id);
               }
-  
+
+              setTimeout(function(){
+                if (typeof receiver === "undefined"){
+                  tourKey = tours[0]["key"];
+                  tourTitleClickedTopicString.data = tourKey;
+                  tourTitleClickedTopic.publish(tourTitleClickedTopicString);
+                }
+              }, 3000);
+
               $('.gridtab-1').gridtab({
                 grid: 6,
                 tabPadding: 0,
