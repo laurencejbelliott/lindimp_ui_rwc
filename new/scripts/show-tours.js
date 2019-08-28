@@ -1,3 +1,21 @@
+// ROS topics to track gribtab clicks
+var tourTitleClickedTopic = new ROSLIB.Topic({
+  ros: ros,
+  name: "/lindimp_ui_rwc/tourTitleClicked",
+  messageType: "std_msgs/String"
+});
+
+var tourTitleClickedTopicString = new ROSLIB.Message({data: ""});
+
+var exhibitCellClickedTopic = new ROSLIB.Topic({
+  ros: ros,
+  name: "/lindimp_ui_rwc/exhibitCellClicked",
+  messageType: "std_msgs/String"
+});
+
+var exhibitCellClickedTopicString = new ROSLIB.Message({data: ""});
+
+// Shuffle function to randomise tour order
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
       let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
@@ -5,15 +23,9 @@ function shuffle(array) {
     }
 }
 
+
 function Show_available_tours() {
     $.when(
-      // load header builder
-    //   $.getScript("/js/headerBuilder.js"),
-    //   $.getScript("/js/footerBuilder.js"),
-      // load spin js
-      // $.getScript("/js/spin.min.js"),
-      // load ladda js
-      // $.getScript("/js/ladda.min.js"),
       $.Deferred(function( deferred ){
         $( deferred.resolve );
       })
@@ -40,7 +52,14 @@ function Show_available_tours() {
               var s_desc = new DOMParser().parseFromString(response1, "text/html").querySelector("[role=stop-desc]");
   
               for (var i=0; i<tours.length; i++) {
-                t_title_c = t_title.cloneNode(true);
+                var t_title_c = t_title.cloneNode(true);
+                var tourKey = tours[i]["key"];
+                t_title_c.setAttribute("id", "tour-" + tourKey);
+                $(t_title_c).on("click", function(){
+                  tourKey = this.id;
+                  tourTitleClickedTopicString.data = tourKey;
+                  tourTitleClickedTopic.publish(tourTitleClickedTopicString);
+                });
                 t_title_c.innerHTML = tours[i]["name"];
                 $("[role=tours-container]").append(t_title_c);
   
@@ -52,6 +71,7 @@ function Show_available_tours() {
                   for (var e=0; e<exhibitors.length; e++) {
                     if (exhibitors[e]["key"] == tour_stop_keys[k]) {
                       s_img_c = s_img.cloneNode(true);
+                      s_img_c.setAttribute("id", "exhibit-" + exhibitors[e]["key"]);
                       s_img_c.getElementsByTagName("img")[0].setAttribute("src", exhibitors[e]["tile_image"]);
                       s_desc_c = s_desc.cloneNode(true);
                       s_desc_c.innerHTML = exhibitors[e]["title"]
@@ -64,23 +84,6 @@ function Show_available_tours() {
                 var startTourButton = t_content_c.querySelector("[role=tour-btn]");
                 var tour_id = tours[i]["key"]; //copy the value in a new var
                 startTourButton.setAttribute("data-action-parameters", tour_id);
-                console.log(startTourButton);
-                // t_btn_c = t_btn.cloneNode(true);
-                // t_btn_c.onmousedown
-                // t_content_c.querySelector("[role=tour-btn]").innerHTML = "Start this tour!"
-                // t_content_c.querySelector("[role=tour-btn]").onmouseover = (function() {
-                //   var tour_id = tours[i]["key"]; //copy the value in a new var
-                //   return function(){
-                //       SafePhysicalButtonEvent(function() {
-                //     // Signal_buttonPressed(btn_id);
-                //     // Check_exhist_param("/interface_enabled").then((params) => Check_param_value(params).then(value => {
-                //     //   if (value)
-                //           Start_tour_task(tour_id);
-                //     //   }
-                //     // }));
-                //   }, tour_id);
-                //   }
-                // }) ();
               }
   
               $('.gridtab-1').gridtab({
@@ -89,7 +92,6 @@ function Show_available_tours() {
                 borderWidth: 4,
                 contentPadding: 30,
                 tabPadding: 15,
-                // activeTabBackground: '#563C55',
                 contentBorderColor: '#ffc107',
                 tabBorderColor: '#ffc107',
                 responsive: [{
