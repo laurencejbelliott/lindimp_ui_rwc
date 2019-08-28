@@ -210,22 +210,6 @@ $(document).ready(function(){
   spinner.setAttribute("class", "spin");
   document.body.appendChild(spinner);
 
-  stopButton = document.createElement("div");
-  stopButton.setAttribute("class", "cancel-button rwc-button-action-start");
-  stopButtonSpan = document.createElement("span");
-  stopButtonSpan.innerHTML = "Cancel action";
-  stopButton.appendChild(stopButtonSpan);
-  if(isPhone){
-    stopButton.addEventListener('touchstart', function(event){
-      cancelCurrentAction();
-    });
-  } else {
-    stopButton.addEventListener('click', e => {
-      cancelCurrentAction();
-    });
-  }
-  document.body.appendChild(stopButton);
-
   window.setInterval(function(){
     // Get interfaceBusy ROS parameter
     interfaceBusyParam.get(function(param){
@@ -307,6 +291,24 @@ $(document).ready(function(){
   var modalDiv = document.createElement('div');
   modalDiv.setAttribute('role', 'modal');
   document.body.appendChild(modalDiv);
+
+  // Create and append stop button
+  stopButton = document.createElement("div");
+  stopButton.setAttribute("class", "cancel-button rwc-button-action-start");
+  stopButton.setAttribute("z-index", 9999);
+  stopButtonSpan = document.createElement("span");
+  stopButtonSpan.innerHTML = "Cancel action";
+  stopButton.appendChild(stopButtonSpan);
+  if(isPhone){
+    stopButton.addEventListener('touchstart', function(event){
+      cancelCurrentAction();
+    });
+  } else {
+    stopButton.addEventListener('click', e => {
+      cancelCurrentAction();
+    });
+  }
+  document.body.appendChild(stopButton);
 });
 
 // Connection to ROSbridge server websocket
