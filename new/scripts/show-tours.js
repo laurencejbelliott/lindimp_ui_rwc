@@ -136,14 +136,6 @@ function Show_available_tours() {
           startTourButton.setAttribute("data-action-parameters", tour_id);
         }
 
-        setTimeout(function(){
-          if (typeof receiver === "undefined"){
-            tourKey = tours[0]["key"];
-            tourTitleClickedTopicString.data = tourKey;
-            tourTitleClickedTopic.publish(tourTitleClickedTopicString);
-          }
-        }, 3000);
-
         $('.gridtab-1').gridtab({
           grid: 6,
           tabPadding: 0,
