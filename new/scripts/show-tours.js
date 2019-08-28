@@ -72,6 +72,11 @@ function Show_available_tours() {
                     if (exhibitors[e]["key"] == tour_stop_keys[k]) {
                       s_img_c = s_img.cloneNode(true);
                       s_img_c.setAttribute("id", "exhibit-" + exhibitors[e]["key"]);
+                      $(s_img_c).on("click", function(){
+                        var exhibitKey = this.id;
+                        exhibitCellClickedTopicString.data = exhibitKey;
+                        exhibitCellClickedTopic.publish(exhibitCellClickedTopicString);
+                      });
                       s_img_c.getElementsByTagName("img")[0].setAttribute("src", exhibitors[e]["tile_image"]);
                       s_desc_c = s_desc.cloneNode(true);
                       s_desc_c.innerHTML = exhibitors[e]["title"]
