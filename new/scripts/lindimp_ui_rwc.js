@@ -69,7 +69,7 @@ $(document).ready(function(){
         name: "/motor_status",
         messageType: "scitos_msgs/MotorStatus"
     });
-    
+
     motorStatusTopic.subscribe(function(msg){
         var ePressed = msg.emergency_button_pressed;
         if (ePressed){

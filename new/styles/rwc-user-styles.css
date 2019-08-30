@@ -186,3 +186,45 @@ div.startTourButtonClicked{
     -moz-user-select: none;
     -ms-user-select: none;
 }
+
+.describeExhibitButton, .goToExhibitButton{
+    display: block;
+    margin: 5px auto 5px auto !important;
+    height: 50px;
+    width: 100%;
+    font: arial;
+    font-size: 1.25rem;
+    color: white;
+    text-align: center;
+    line-height: 50px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 8px;
+}
+
+.describeExhibitButton{
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+.goToExhibitButton{
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.describeExhibitButtonDisabled, .goToExhibitButtonDisabled{
+    display: block;
+    margin: 5px auto 5px auto !important;
+    height: 50px;
+    width: 100%;
+    font: arial;
+    font-size: 1.25rem;
+    background-color: grey; 
+    border-color: grey;
+    color: lightgray;
+    text-align: center;
+    line-height: 50px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 8px;
+}
