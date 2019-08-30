@@ -890,14 +890,6 @@ $("document").ready(function(){
     });
   });
 
-  // Create stop button element
-  stopButton = document.createElement("div");
-  stopButton.setAttribute("class", "cancel-button-receiver");
-  stopButtonSpan = document.createElement("span");
-  stopButtonSpan.innerHTML = "Cancel action";
-  stopButton.appendChild(stopButtonSpan);
-  document.body.appendChild(stopButton);
-
   // Create spinner element
   spinner = document.createElement("div");
   spinner.setAttribute("class", "spin");
@@ -1058,5 +1050,13 @@ $("document").ready(function(){
   showModalCloseTopic.subscribe(function(msg) {
     console.log('listener interface show modal msg.data='+msg.data);
     Close_modal(msg.data);
+
+  // Create stop button element
+  stopButton = document.createElement("div");
+  stopButton.setAttribute("class", "cancel-button-receiver");
+  stopButtonSpan = document.createElement("span");
+  stopButtonSpan.innerHTML = "Cancel action";
+  stopButton.appendChild(stopButtonSpan);
+  document.body.appendChild(stopButton);
   });
 });
