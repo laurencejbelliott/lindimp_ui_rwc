@@ -105,6 +105,9 @@ var disabledComponentIDs = [];
 // Global var to track IDs of initially disabled components which are enabled
 var startDisabledEnabledComponentIDs = [];
 
+// Global var for stop button element
+var stopButton;
+
 // --- Speech bubbles ---
 // Load CSS
 var cssLink = $("<link rel='stylesheet' type='text/css' href='styles/speechbubble.css'>");
@@ -295,7 +298,7 @@ $(document).ready(function(){
   // Create and append stop button
   stopButton = document.createElement("div");
   stopButton.setAttribute("class", "cancel-button rwc-button-action-start");
-  stopButton.setAttribute("z-index", 9999);
+  stopButton.setAttribute("style", "z-index: 9999;");
   stopButtonSpan = document.createElement("span");
   stopButtonSpan.innerHTML = "Cancel action";
   stopButton.appendChild(stopButtonSpan);
@@ -2443,7 +2446,7 @@ function awaitListenerData(listener, listenerComponent = null, fieldSelector = n
         rwcListenerData = listeners[listener](listenerComponent)
       }
       else {
-        rwcListenerCustom(listenerComponent, fieldSelector);
+        rwcListenerData = rwcListenerCustom(listenerComponent, fieldSelector);
       }
       resolve(rwcListenerData);
     }, 50);

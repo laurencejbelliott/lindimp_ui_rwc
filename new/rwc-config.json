@@ -61,6 +61,14 @@
         },
         "camera_snapshot": {
             "uri": "http://localhost:8080/snapshot?topic=/head_xtion/rgb/image_color"
+        },
+        "task-event": {
+            "topicName": "/task_executor/events",
+            "topicMessageType": "strands_executive_msgs/TaskEvent"
+        },
+        "action-name": {
+            "topicName": "/PNPActionCmd",
+            "topicMessageType": "std_msgs/String"
         }
     }
 }
