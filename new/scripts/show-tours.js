@@ -27,14 +27,6 @@ var toursArrayTopic = new ROSLIB.Topic({
   messageType: "std_msgs/String",
   latch: true
 });
-// } else {
-//   // ROS topic to track tours arrays
-//   toursArrayTopic = new ROSLIB.Topic({
-//     ros: ros,
-//     name: "/lindimp_ui_rwc/toursArray",
-//     messageType: "std_msgs/String"
-//   });
-// }
 
 var toursArrayTopicString = new ROSLIB.Message({data: ""});
 var tours;

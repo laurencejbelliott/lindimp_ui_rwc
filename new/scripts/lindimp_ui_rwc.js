@@ -1,3 +1,5 @@
+listeners["getTaskEvent"] = rwcListenerGetTaskEvent;
+
 var eventDescs = [
     "ADDED",
     "DEMANDED",
@@ -57,13 +59,9 @@ function subTaskEvent(listener, listenerComponent = null){
     });
 }
 
-listeners["getTaskEvent"] = rwcListenerGetTaskEvent;
-
 
 
 $(document).ready(function(){
-    stopButton.hidden = true;
-
     var motorStatusTopic = new ROSLIB.Topic({
         ros: ros,
         name: "/motor_status",
@@ -78,4 +76,6 @@ $(document).ready(function(){
             $("#EB-alert").hide();
         }
     });
+
+    stopButton.hidden = true;
 });

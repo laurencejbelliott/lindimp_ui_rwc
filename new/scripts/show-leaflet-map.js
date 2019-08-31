@@ -1,11 +1,18 @@
+var mapMarkerClickedTopic = new ROSLIB.Topic({
+    ros: ros,
+    name: "/lindimp_ui_rwc/map_marker_clicked",
+    messageType: "std_msgs/String"
+});
+
+var mapMarkerClickedTopicString = new ROSLIB.Message({
+    data: ""
+});
+
+var markers = [];
+
 function Show_leaflet_map() {
     $("[role=content]").load("display-map-leaflet.html", function() {
-    // set height to 100% to map div and all its anchestors
-    // $("html").attr("style", "height: 100%");
-    // $("body").attr("style", "height: 100%");
-    // $("[role=content]").attr("style", "height: 100%");
         $.getJSON("config/exhibitors_definition.json", function(data) {
-
             var center = [0, 0];
             var map = L.map('map', {
             center: center,
@@ -45,48 +52,48 @@ function Show_leaflet_map() {
                 this._div.innerHTML = '<h4>Exhibitor description</h4>' +  (title ?
                     '<h4 style="text-align:center;color:black">' + title + '</h4><br />'+"<img src='" + image + "' draggable='false' style='width:100%;margin-left:auto;margin-right:auto;display: block;'>" +
                     '<div style="vertical-align: middle">' +
-                    '<rwc-button-action-start data-id="describeExhibitButton" data-class="describeExhibitButton" data-disabled-class="describeExhibitButtonDisabled" data-action="describeExhibit" data-action-parameters="' + key + '" data-text="Tell me about"></rwc-button-action-start>' +
-                    '<rwc-button-action-start data-id="goToExhibitButton" data-class="goToExhibitButton" data-disabled-class="goToExhibitButtonDisabled" data-action="goToAndDescribeExhibit" data-action-parameters="' + key + '" data-text="Go there"></rwc-button-action-start>' +
-                    // '<button style="display:block;margin: 5px auto 5px auto; width: 80%;" role="map-exhibit-tell" type=button class="btn btn-lg btn-info">Tell me about</button>' +
-                    // '<button style="display:block;margin: 5px auto 5px auto; width: 80%;" role="map-exhibit-go" type=button class="btn btn-lg btn-success">Go there</button>' +
+                    '<rwc-button-action-start data-id="describeExhibitButton" data-class="describeExhibitButton" data-busy-class="describeExhibitButtonBusy" data-action="describeExhibit" data-action-parameters="' + key + '" data-text="Tell me about"></rwc-button-action-start>' +
+                    '<rwc-button-action-start data-id="goToExhibitButton" data-class="goToExhibitButton" data-busy-class="goToExhibitButtonBusy" data-action="goToAndDescribeExhibit" data-action-parameters="' + key + '" data-text="Go there"></rwc-button-action-start>' +
                     '</div>'
                     : 'Click on a marker!');
-                $("[role=map-exhibit-tell]").mouseover(function() {
-                    SafeButtonEvent(function(){
-                        Start_describe_task(key)
-                    }, key);
-                });
-                $("[role=map-exhibit-go]").mouseover(function() {
-                    SafePhysicalButtonEvent(function(){
-                        Start_gotoAndDescribe_task(key)
-                    }, key);
-                });
             };
             info.addTo(map);
 
             var iconSize = [40, 60];
-            var icons = [new L.Icon({
+
+            var idIcon = L.Icon.extend({
+                options: {
+                    id: "",
+                    iconUrl: 'images/marker-icon-2x-blue.png',
+                    iconSize: iconSize,
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41]
+                }
+            });
+
+            var icons = [new idIcon({
                 iconUrl: 'images/marker-icon-2x-blue.png',
                 iconSize: iconSize,
                 iconAnchor: [12, 41],
                 popupAnchor: [1, -34],
                 shadowSize: [41, 41]
             }),
-            new L.Icon({
+            new idIcon({
                 iconUrl: 'images/marker-icon-2x-green.png',
                 iconSize: iconSize,
                 iconAnchor: [12, 41],
                 popupAnchor: [1, -34],
                 shadowSize: [41, 41]
             }),
-            new L.Icon({
+            new idIcon({
                 iconUrl: 'images/marker-icon-2x-red.png',
                 iconSize: iconSize,
                 iconAnchor: [12, 41],
                 popupAnchor: [1, -34],
                 shadowSize: [41, 41]
             }),
-            new L.Icon({
+            new idIcon({
                 iconUrl: 'images/marker-icon-2x-yellow.png',
                 iconSize: iconSize,
                 iconAnchor: [12, 41],
@@ -94,14 +101,14 @@ function Show_leaflet_map() {
                 shadowSize: [41, 41]
             })];
 
-            var markers = []
+            markers = [];
             for (var t=0; t<data["tours"].length; t++) {
                 for (var e=0; e<data["tours"][t]["exhibitors"].length; e++) {
                     for (i=0; i<data["exhibitors"].length; i++) {
                         if (data["tours"][t]["exhibitors"][e] == data["exhibitors"][i]["key"]) {
                             var x = data["exhibitors"][i]["map_image_position"][0];
                             var y = data["exhibitors"][i]["map_image_position"][1];
-                            markers[i] = L.marker(map.unproject([x, y], map.getZoom()),  {icon: icons[t], interactive: true, riseOnHover: true}).addTo(map);
+                            markers[i] = L.marker(map.unproject([x, y], map.getZoom()),  {id: data["exhibitors"][i]["key"], icon: icons[t], interactive: true, riseOnHover: true}).addTo(map);
 
                             // popup
                             markers[i].on('click', (function() {
@@ -113,14 +120,25 @@ function Show_leaflet_map() {
                                 var mapi = map;
                                 var image = data["exhibitors"][i]["tile_image"];
                                 return (function(e) {
-                                    L.popup({maxWidth: 150, autopan: true})
-                                    .setLatLng(mapi.unproject([xi * mapi.getZoom(), yi * mapi.getZoom() + offset]))
-                                    .setContent( key + ": <b>"+title +"</b>")
-                                    .openOn(mapi);
-                                    info.update(title, image, key);
+                                    if (typeof receiver !== "undefined"){
+                                        this._icon.setAttribute("id", String(key));
+                                        L.popup({maxWidth: 150, autopan: true})
+                                        .setLatLng(mapi.unproject([xi * mapi.getZoom(), yi * mapi.getZoom() + offset]))
+                                        .setContent( key + ": <b>"+title +"</b>")
+                                        .openOn(mapi);
+                                        info.update(title, image, key);
+                                    } else {
+                                        L.popup({maxWidth: 150, autopan: true})
+                                        .setLatLng(mapi.unproject([xi * mapi.getZoom(), yi * mapi.getZoom() + offset]))
+                                        .setContent( key + ": <b>"+title +"</b>")
+                                        .openOn(mapi);
+                                        info.update(title, image, key);
+                                        mapMarkerClickedTopicString.data = String(key);
+                                        mapMarkerClickedTopic.publish(mapMarkerClickedTopicString);
+                                    }
+                                    console.log(this);
                                 });
                             }) ());
-                            // markers[i].on('mouseout', function() {info.update();});
                         }
                     }
                 }
