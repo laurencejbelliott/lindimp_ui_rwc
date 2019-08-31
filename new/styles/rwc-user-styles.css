@@ -43,7 +43,7 @@ div.headerButton:active{
     margin-right: 3px;
 }
 
-div.headerButtonDisabled{
+div.headerButtonBusy{
     font-size: 20px;
     width: 12vw;
     max-width: 100px;
@@ -133,7 +133,7 @@ div.startTourButton{
     -ms-user-select: none;
 }
 
-div.startTourButtonDisabled{
+div.startTourButtonBusy{
     text-align: center;
     font-size: 20px;
     width: 13vw;
@@ -212,7 +212,7 @@ div.startTourButtonClicked{
     border-color: #28a745;
 }
 
-.describeExhibitButtonDisabled, .goToExhibitButtonDisabled{
+.describeExhibitButtonBusy, .goToExhibitButtonBusy{
     display: block;
     margin: 5px auto 5px auto !important;
     height: 50px;
