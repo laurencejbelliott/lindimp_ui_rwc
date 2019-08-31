@@ -247,10 +247,12 @@ $(document).ready(function(){
             element.disabled = false;
           }
         });
+        $(document.body).attr("pointer-events", "auto");
       } else if(window.rwcInterfaceEnabled == 0){
         toggleableComponents.forEach(function(element){
           element.disabled = true;
         });
+        $(document.body).attr("pointer-events", "none");
       }
     }
 
@@ -1569,8 +1571,6 @@ class rwcButtonLoadPage extends HTMLElement {
       } else {
         this.rwcClass = "rwc-button-action-start-disabled";
       }
-    } else if (this.isDisabled && !(this.busy)) {
-        this.rwcClass = "rwc-button-action-start-receiver";
     } else {
       if (this.hasAttribute("data-class")) {
         this.rwcClass = this.dataset.class;
@@ -1621,8 +1621,6 @@ class rwcButtonLoadPage extends HTMLElement {
       } else {
         this.rwcClass = "rwc-button-action-start-disabled";
       }
-    } else if (this.isDisabled && !(this.busy)) {
-      this.rwcClass = "rwc-button-action-start-receiver";
     } else {
       if (this.hasAttribute("data-class")) {
         this.rwcClass = this.dataset.class;
@@ -1704,8 +1702,6 @@ class rwcTextLoadPage extends HTMLElement {
       } else {
         this.rwcClass = "rwc-text-action-start-disabled";
       }
-    } else if (this.isDisabled && !(this.busy)) {
-        this.rwcClass = "rwc-text-action-start-receiver";
     } else {
       if (this.hasAttribute("data-class")) {
         this.rwcClass = this.dataset.class;
@@ -1756,8 +1752,6 @@ class rwcTextLoadPage extends HTMLElement {
       } else {
         this.rwcClass = "rwc-text-action-start-disabled";
       }
-    } else if (this.isDisabled && !(this.busy)) {
-      this.rwcClass = "rwc-text-action-start-receiver";
     } else {
       if (this.hasAttribute("data-class")) {
         this.rwcClass = this.dataset.class;
@@ -1839,8 +1833,6 @@ class rwcImageLoadPage extends HTMLElement {
       } else {
         this.rwcClass = "rwc-img-action-start-disabled";
       }
-    } else if (this.isDisabled && !(this.busy)) {
-        this.rwcClass = "rwc-img-action-start-receiver";
     } else {
       if (this.hasAttribute("data-class")) {
         this.rwcClass = this.dataset.class;
@@ -1891,8 +1883,6 @@ class rwcImageLoadPage extends HTMLElement {
       } else {
         this.rwcClass = "rwc-img-action-start-disabled";
       }
-    } else if (this.isDisabled && !(this.busy)) {
-      this.rwcClass = "rwc-img-action-start-receiver";
     } else {
       if (this.hasAttribute("data-class")) {
         this.rwcClass = this.dataset.class;
@@ -1968,8 +1958,6 @@ class rwcButtonActionStart extends HTMLElement {
       } else {
         this.rwcClass = "rwc-button-action-start-disabled";
       }
-    } else if (this.isDisabled && !(this.busy)) {
-        this.rwcClass = "rwc-button-action-start-receiver";
     } else {
       if (this.hasAttribute("data-class")) {
         this.rwcClass = this.dataset.class;
@@ -2048,8 +2036,6 @@ class rwcButtonActionStart extends HTMLElement {
       } else {
         this.rwcClass = "rwc-button-action-start-disabled";
       }
-    } else if (this.isDisabled && !(this.busy)) {
-      this.rwcClass = "rwc-button-action-start-receiver";
     } else {
       if (this.hasAttribute("data-class")) {
         this.rwcClass = this.dataset.class;
@@ -2131,8 +2117,6 @@ class rwcTextActionStart extends HTMLElement {
       } else {
         this.rwcClass = "rwc-text-action-start-disabled";
       }
-    } else if (this.isDisabled && !(this.busy)) {
-        this.rwcClass = "rwc-text-action-start-receiver";
     } else {
       if (this.hasAttribute("data-class")) {
         this.rwcClass = this.dataset.class;
@@ -2211,8 +2195,6 @@ class rwcTextActionStart extends HTMLElement {
       } else {
         this.rwcClass = "rwc-text-action-start-disabled";
       }
-    } else if (this.isDisabled && !(this.busy)) {
-      this.rwcClass = "rwc-text-action-start-receiver";
     } else {
       if (this.hasAttribute("data-class")) {
         this.rwcClass = this.dataset.class;
@@ -2294,8 +2276,6 @@ class rwcImageActionStart extends HTMLElement {
       } else {
         this.rwcClass = "rwc-img-action-start-disabled";
       }
-    } else if (this.isDisabled && !(this.busy)) {
-        this.rwcClass = "rwc-img-action-start-receiver";
     } else {
       if (this.hasAttribute("data-class")) {
         this.rwcClass = this.dataset.class;
@@ -2376,8 +2356,6 @@ class rwcImageActionStart extends HTMLElement {
       } else {
         this.rwcClass = "rwc-img-action-start-disabled";
       }
-    } else if (this.isDisabled && !(this.busy)) {
-      this.rwcClass = "rwc-img-action-start-receiver";
     } else {
       if (this.hasAttribute("data-class")) {
         this.rwcClass = this.dataset.class;
