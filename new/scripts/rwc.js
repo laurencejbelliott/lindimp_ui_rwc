@@ -1081,7 +1081,7 @@ function rwcActionStartTour(name_or_key, duration=60*60){
   goal.addEventListener('result', function(status) {
       console.log("Tour completed!");
       freeInterface();
-      location.reload();
+      window.location.href = "index.html";
   },);
 
 
