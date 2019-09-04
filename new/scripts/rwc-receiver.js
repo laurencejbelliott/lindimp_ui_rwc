@@ -26,7 +26,7 @@ var listeners = {
 };
 
 var rosws_url;
-var hostname = location.host;
+var hostname = location.host.split(":")[0];
             if (location.protocol == "https:") {
                 rosws_protocol = 'wss'
             } else {

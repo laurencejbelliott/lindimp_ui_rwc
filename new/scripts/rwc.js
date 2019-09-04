@@ -324,7 +324,7 @@ $(document).ready(function(){
 });
 
 var rosws_url;
-var hostname = location.host;
+var hostname = location.host.split(":")[0];
             if (location.protocol == "https:") {
                 rosws_protocol = 'wss'
             } else {
@@ -333,6 +333,7 @@ var hostname = location.host;
             console.log(location);
             rosws_suffix = ":9090";
             rosws_url = rosws_protocol+'://'+hostname+rosws_suffix
+
 
 // Connection to ROSbridge server websocket
 var ros = new ROSLIB.Ros({
