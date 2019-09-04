@@ -6,7 +6,7 @@ var JSONreq = $.getJSON("rwc-config.json", function(json){
 
   // Set rosbridge_websocket URL
   ros = new ROSLIB.Ros({
-    url: configJSON["rosbridge_websocket_url"]
+    url: rosws_url
   });
   console.log("rosbridge_websocket URL: " +  ros.socket.url);
 });
@@ -25,9 +25,20 @@ var listeners = {
   "getVolumePercent": rwcListenerGetVolumePercent
 };
 
+var rosws_url;
+var hostname = location.host;
+            if (location.protocol == "https:") {
+                rosws_protocol = 'wss'
+            } else {
+                rosws_protocol = 'ws'
+            }
+            console.log(location);
+            rosws_suffix = ":9090";
+            rosws_url = rosws_protocol+'://'+hostname+rosws_suffix
+
 // Connection to ROSbridge server websocket
 var ros = new ROSLIB.Ros({
-  url: 'ws://localhost:9090'
+    url: rosws_url
 });
 
 ros.on('connection', function(){
